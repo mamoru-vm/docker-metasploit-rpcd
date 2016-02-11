@@ -15,7 +15,7 @@ then
   # If not create it
   if [[ ! $USEREXIST -eq 1 ]]
   then
-   psql -h pg -p 5432 -U postgres postgres -c "create role $MSFRPC_USER login password '$MSF_PASS'"
+   psql -h pg -p 5432 -U postgres postgres -c "create role $MSFRPC_USER login password '$MSFRPC_PASS'"
   fi
 
   DBEXIST="$(psql -h pg -p 5432 -U postgres  postgres -l | grep $MSF_DB)"
