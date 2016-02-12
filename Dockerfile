@@ -36,6 +36,9 @@ RUN bash /cleanup.sh
 
 ENV PATH=$PATH:/metasploit-framework
 
+ENV MSF_DATABASE_CONFIG /metasploit-framework/config/database.yml
+ENV PGPASSFILE /.pgpass
+
 COPY pentest.rb /metasploit-framework/plugins/
 COPY entrypoint.sh /
 

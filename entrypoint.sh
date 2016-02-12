@@ -9,8 +9,8 @@ MSFRPC_USER=${MSFRPC_USER:-mamoru}
 MSFRPC_PASS=${MSFRPC_PASS:-mamoru}
 
 #create pgpass for psql commands
-echo "pg:5432:*:postgres:$PG_ENV_POSTGRES_PASSWORD" > ~/.pgpass
-chmod 0600 ~/.pgpass
+echo "pg:5432:*:postgres:$PG_ENV_POSTGRES_PASSWORD" > /.pgpass
+chmod 0600 /.pgpass
 
 if [[ ! -z "$PG_PORT_5432_TCP_ADDR" ]]
 then
