@@ -32,7 +32,7 @@ then
    adapter: postgresql
    database: $MSF_DB
    username: $MSFRPC_USER
-   password: $MSFRPC_USER
+   password: $MSFRPC_PASS
    host: pg
    port: 5432
    pool: 75
