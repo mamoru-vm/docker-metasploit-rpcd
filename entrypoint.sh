@@ -8,20 +8,24 @@ MSF_DB=${MSF_DB:-msf}
 MSFRPC_USER=${MSFRPC_USER:-mamoru}
 MSFRPC_PASS=${MSFRPC_PASS:-mamoru}
 
+#create pgpass for psql commands
+echo "pg:5432:*:postgres:$PG_ENV_POSTGRES_PASSWORD" > ~/.pgpass
+chmod 0600 ~/.pgpass
+
 if [[ ! -z "$PG_PORT_5432_TCP_ADDR" ]]
 then
   # Check if user exists
-  USEREXIST="$(psql -h pg -p 5432 -U postgres postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$MSFRPC_USER'")"
+  USEREXIST="$(psql -U postgres -d postgres -h pg --no-password -tAc "SELECT 1 FROM pg_roles WHERE rolname='$MSFRPC_USER'")"
   # If not create it
   if [[ ! $USEREXIST -eq 1 ]]
   then
-   psql -h pg -p 5432 -U postgres postgres -c "create role $MSFRPC_USER login password '$MSFRPC_PASS'"
+   psql -h pg -p 5432 -U postgres -d postgres  --no-password -c "create role $MSFRPC_USER login password '$MSFRPC_PASS'"
   fi
 
-  DBEXIST="$(psql -h pg -p 5432 -U postgres  postgres -l | grep $MSF_DB)"
+  DBEXIST="$(psql -h pg -p 5432 -U postgres -d postgres --no-password -l | grep $MSF_DB)"
   if [[ ! $DBEXIST ]]
   then
-   psql -h pg -p 5432 -U postgres postgres -c "CREATE DATABASE $MSF_DB OWNER $MSFRPC_USER;"
+   psql -h pg -p 5432 -U postgres -d postgres --no-password -c "CREATE DATABASE $MSF_DB OWNER $MSFRPC_USER;"
   fi
 
   echo "production:
